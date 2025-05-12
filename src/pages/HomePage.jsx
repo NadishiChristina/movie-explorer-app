@@ -1,5 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Container, Box, Tabs, Tab, Paper } from '@mui/material';
+import "slick-carousel/slick/slick.css"; 
+import "slick-carousel/slick/slick-theme.css";
+import HeroCarousel from '../components/movie/HeroCarousel';
+
+
 import MovieGrid from '../components/movie/MovieGrid';
 import FilterBar from '../components/movie/FilterBar';
 import { useMovie } from '../hooks/useMovie';
@@ -122,30 +127,35 @@ const HomePage = () => {
     : "Trending Movies";
 
   return (
-    <Container maxWidth="xl">
-      <FilterBar onFilterChange={handleFilterChange} />
-      
-      {!searchQuery && (
-        <Paper sx={{ mb: 3 }}>
-          <Tabs 
-            value={tabValue} 
-            onChange={handleTabChange}
-            variant="fullWidth"
-          >
-            <Tab label="Trending" />
-            <Tab label="Filter Results" disabled={!isFiltering} />
-          </Tabs>
-        </Paper>
-      )}
-      
-      <MovieGrid 
-        movies={displayMovies} 
-        title={title}
-        loadMore={handleLoadMore}
-        hasMore={hasMoreMovies}
-      />
-    </Container>
-  );
+  <Container maxWidth="xl">
+    {/* Add Slideshow here */}
+    <HeroCarousel />
+
+    {/* Filter bar section */}
+    <FilterBar onFilterChange={handleFilterChange} />
+
+    {!searchQuery && (
+      <Paper sx={{ mb: 3 }}>
+        <Tabs 
+          value={tabValue} 
+          onChange={handleTabChange}
+          variant="fullWidth"
+        >
+          <Tab label="Trending" />
+          <Tab label="Filter Results" disabled={!isFiltering} />
+        </Tabs>
+      </Paper>
+    )}
+
+    <MovieGrid 
+      movies={displayMovies} 
+      title={title}
+      loadMore={handleLoadMore}
+      hasMore={hasMoreMovies}
+    />
+  </Container>
+);
+
 };
 
 export default HomePage;
