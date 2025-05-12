@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const API_KEY = ''; // Insert actual API key
+// Access the tmdb api key from .env file
+const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 const BASE_URL = 'https://api.themoviedb.org/3';
 
 const tmdbApi = axios.create({
@@ -10,6 +11,7 @@ const tmdbApi = axios.create({
   },
 });
 
+// Fetches a list of trending movies for the week from TMDB.
 export const getTrendingMovies = async (page = 1) => {
   try {
     const response = await tmdbApi.get('/trending/movie/week', {
@@ -22,6 +24,7 @@ export const getTrendingMovies = async (page = 1) => {
   }
 };
 
+// Search movies based on a user’s input (query).
 export const searchMovies = async (query, page = 1) => {
   try {
     const response = await tmdbApi.get('/search/movie', {
@@ -34,6 +37,7 @@ export const searchMovies = async (query, page = 1) => {
   }
 };
 
+// Fetch full movie details by movieId
 export const getMovieDetails = async (movieId) => {
   try {
     const response = await tmdbApi.get(`/movie/${movieId}`, {
@@ -48,6 +52,7 @@ export const getMovieDetails = async (movieId) => {
   }
 };
 
+// Fetch movies by selected genre(s) with filters
 export const getMoviesByGenre = async (
   genreIds, 
   page = 1, 
@@ -76,6 +81,7 @@ export const getMoviesByGenre = async (
   }
 };
 
+// Fetches the full list of available movie genres
 export const getGenres = async () => {
   try {
     const response = await tmdbApi.get('/genre/movie/list');
