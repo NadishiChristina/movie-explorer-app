@@ -22,10 +22,10 @@ const AppContent = () => {
         palette: {
           mode: darkMode ? 'dark' : 'light',
           primary: {
-            main: '#1976d2',
+            main: '#d5d2d1',
           },
           secondary: {
-            main: '#f50057',
+            main: '#f50057', // to change navbar color
           },
         },
       }),

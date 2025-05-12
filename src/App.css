@@ -1,3 +1,4 @@
+/* Original App.css contents */
 #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -12,10 +13,10 @@
   transition: filter 300ms;
 }
 .logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+  filter: drop-shadow(0 0 2em #fdfdfdaa);
 }
 .logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+  filter: drop-shadow(0 0 2em #f5f6f7aa);
 }
 
 @keyframes logo-spin {
@@ -37,6 +38,58 @@
   padding: 2em;
 }
 
-.read-the-docs {
-  color: #888;
+/* Additional animation keyframes for login page */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideInUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.03); }
+  100% { transform: scale(1); }
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Background animation for login page */
+.bg-animate {
+  animation: gradientShift 15s ease infinite;
+  background-size: 400% 400%;
+}
+
+/* For animated input fields */
+.input-focus-effect:focus-within {
+  animation: pulse 1s ease-in-out;
+}
+
+/* Shine effect animation */
+@keyframes shine {
+  0% {
+    background-position: -100% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Remove padding for login page */
+.login-page #root {
+  padding: 0;
+  max-width: 100%;
 }
