@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+// eslint-disable-next-line no-unused-vars
 import { useParams, useNavigate } from 'react-router-dom';
 import { Container } from '@mui/material';
 import MovieDetail from '../components/movie/MovieDetail';

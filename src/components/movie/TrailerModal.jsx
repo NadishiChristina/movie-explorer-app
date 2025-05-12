@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Dialog, DialogContent, IconButton, Box } from '@mui/material';
 import { Close } from '@mui/icons-material';
 
@@ -11,7 +10,7 @@ const TrailerModal = ({ videoKey, open, onClose }) => {
       fullWidth
     >
       <Box sx={{ position: 'relative' }}>
-        <IconButton
+        <IconButton // A styled close (X) button.
           aria-label="close"
           onClick={onClose}
           sx={{
@@ -37,7 +36,7 @@ const TrailerModal = ({ videoKey, open, onClose }) => {
             }}
           >
             <iframe
-              src={`https://www.youtube.com/embed/${videoKey}?autoplay=1`}
+              src={`https://www.youtube.com/embed/${videoKey}?autoplay=1`} // YouTube video URL using videoKey
               title="YouTube video player"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

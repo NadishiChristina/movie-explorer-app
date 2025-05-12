@@ -1,17 +1,15 @@
 import { useState, useEffect } from 'react';
 import { 
   Box, Paper, Typography, Slider, FormControl, 
-  InputLabel, Select, MenuItem, TextField, 
-  Button, Chip, Grid, IconButton
+  InputLabel, Select, MenuItem, Button, Chip, Grid 
 } from '@mui/material';
-import { Close as CloseIcon } from '@mui/icons-material';
 import { getGenres } from '../../services/tmdbApi';
 
 const FilterBar = ({ onFilterChange }) => {
   const [genres, setGenres] = useState([]);
   const [selectedGenres, setSelectedGenres] = useState([]);
   const [yearRange, setYearRange] = useState([1900, new Date().getFullYear()]);
-  const [ratingRange, setRatingRange] = useState([0, 10]);
+  const [ratingRange, setRatingRange] = useState([0, 5]);
   const [sortBy, setSortBy] = useState('popularity.desc');
 
   useEffect(() => {
@@ -27,17 +25,13 @@ const FilterBar = ({ onFilterChange }) => {
     fetchGenres();
   }, []);
 
-  const handleYearChange = (event, newValue) => {
-    setYearRange(newValue);
-  };
+  const handleYearChange = (e, newVal) => setYearRange(newVal);
+  // eslint-disable-next-line no-unused-vars
+  const handleRatingChange = (e, newVal) => setRatingRange(newVal);
 
-  const handleRatingChange = (event, newValue) => {
-    setRatingRange(newValue);
-  };
-
-  const handleGenreSelect = (event) => {
-    const genreId = event.target.value;
-    if (!selectedGenres.includes(genreId)) {
+  const handleGenreSelect = (e) => {
+    const genreId = e.target.value;
+    if (!selectedGenres.find(g => g.id === genreId)) {
       const genre = genres.find(g => g.id === genreId);
       setSelectedGenres([...selectedGenres, genre]);
     }
@@ -47,9 +41,7 @@ const FilterBar = ({ onFilterChange }) => {
     setSelectedGenres(selectedGenres.filter(genre => genre.id !== genreId));
   };
 
-  const handleSortChange = (event) => {
-    setSortBy(event.target.value);
-  };
+  const handleSortChange = (e) => setSortBy(e.target.value);
 
   const handleApplyFilters = () => {
     onFilterChange({
@@ -61,28 +53,33 @@ const FilterBar = ({ onFilterChange }) => {
   };
 
   const handleResetFilters = () => {
+    const defaultYear = [1900, new Date().getFullYear()];
     setSelectedGenres([]);
-    setYearRange([1900, new Date().getFullYear()]);
-    setRatingRange([0, 10]);
+    setYearRange(defaultYear);
+    setRatingRange([0, 5]);
     setSortBy('popularity.desc');
     onFilterChange({
       genres: [],
-      yearRange: [1900, new Date().getFullYear()],
-      ratingRange: [0, 10],
+      yearRange: defaultYear,
+      ratingRange: [0, 5],
       sortBy: 'popularity.desc'
     });
   };
 
   return (
-    <Paper elevation={3} sx={{ p: 3, mb: 3 }}>
-      <Typography variant="h6" gutterBottom>
+    <Paper elevation={6} sx={{ p: 4, mb: 3, mt: 3, borderRadius: 9}}>
+      <Typography variant="h5" fontWeight={600} gutterBottom>
         Filter Movies
       </Typography>
+      
 
-      <Grid container spacing={3}>
+      <Grid container spacing={8}>
+        
         {/* Genre Filter */}
-        <Grid item xs={12} md={4}>
-          <FormControl fullWidth size="small">
+        <Grid item xs={12} md={6} lg={4}>
+          
+          <FormControl fullWidth size="small" sx={{ minWidth: 300 }}>
+            
             <InputLabel id="genre-select-label">Select Genre</InputLabel>
             <Select
               labelId="genre-select-label"
@@ -99,59 +96,108 @@ const FilterBar = ({ onFilterChange }) => {
             </Select>
           </FormControl>
 
-          <Box sx={{ mt: 1, display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+          <Box sx={{ mt: 2, display: 'flex', flexWrap: 'wrap', gap: 1 }}>
             {selectedGenres.map(genre => (
               <Chip 
                 key={genre.id}
                 label={genre.name}
                 onDelete={() => handleRemoveGenre(genre.id)}
-                size="small"
+                color="primary"
+                variant="outlined"
               />
             ))}
           </Box>
         </Grid>
 
-        {/* Year Range Slider */}
-        <Grid item xs={12} md={4}>
-          <Typography id="year-range-slider" gutterBottom>
-            Release Year
+        {/* Year Range */}
+        <Grid item xs={12} md={8} lg={4} mt={-2}>
+          <Typography variant="subtitle1" gutterBottom fontWeight={500}>
+            Release Year Range
           </Typography>
           <Slider
-            value={yearRange}
-            onChange={handleYearChange}
-            valueLabelDisplay="auto"
-            min={1900}
-            max={new Date().getFullYear()}
-            aria-labelledby="year-range-slider"
-          />
-          <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-            <Typography variant="caption">{yearRange[0]}</Typography>
-            <Typography variant="caption">{yearRange[1]}</Typography>
+  value={yearRange}
+  onChange={handleYearChange}
+  min={1900}
+  max={new Date().getFullYear()}
+  sx={{
+    color: '#3B82F6',
+    height: 8,
+    '& .MuiSlider-thumb': {
+      height: 24,
+      width: 24,
+      backgroundColor: '#fff',
+      border: '2px solid currentColor',
+      '&:hover, &.Mui-focusVisible, &.Mui-active': {
+        boxShadow: '0px 0px 0px 8px rgba(59,130,246,0.16)',
+      },
+    },
+    '& .MuiSlider-track': {
+      border: 'none',
+    },
+    '& .MuiSlider-rail': {
+      opacity: 0.3,
+      backgroundColor: '#bfbfbf',
+    },
+    '& .MuiSlider-valueLabel': {
+      backgroundColor: '#3B82F6',
+      color: '#fff',
+      borderRadius: '6px',
+    },
+  }}
+/>
+
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', fontSize: 12 }}>
+            <Typography>{yearRange[0]}</Typography>
+            <Typography>{yearRange[1]}</Typography>
           </Box>
         </Grid>
 
-        {/* Rating Range Slider */}
-        <Grid item xs={12} md={4}>
-          <Typography id="rating-range-slider" gutterBottom>
-            Rating (0-10)
+        {/* Rating Range */}
+            <Grid item xs={12} md={6} lg={4} mt={-2}>
+              <Typography variant="subtitle1" gutterBottom fontWeight={500}>
+            Rating Range
           </Typography>
-          <Slider
-            value={ratingRange}
-            onChange={handleRatingChange}
-            valueLabelDisplay="auto"
-            min={0}
-            max={10}
-            step={0.5}
-            aria-labelledby="rating-range-slider"
-          />
-          <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-            <Typography variant="caption">{ratingRange[0]}</Typography>
-            <Typography variant="caption">{ratingRange[1]}</Typography>
+              <Slider
+  value={ratingRange}
+  onChange={handleRatingChange}
+  min={0}
+                max={5}
+                step={0.5}
+  sx={{
+    color: '#93f226',
+    height: 8,
+    '& .MuiSlider-thumb': {
+      height: 24,
+      width: 24,
+      backgroundColor: '#fff',
+      border: '2px solid currentColor',
+      '&:hover, &.Mui-focusVisible, &.Mui-active': {
+        boxShadow: '0px 0px 0px 8px rgba(59,130,246,0.16)',
+      },
+    },
+    '& .MuiSlider-track': {
+      border: 'none',
+    },
+    '& .MuiSlider-rail': {
+      opacity: 0.3,
+      backgroundColor: '#bfbfbf',
+    },
+    '& .MuiSlider-valueLabel': {
+      backgroundColor: '#3B82F6',
+      color: '#fff',
+      borderRadius: '6px',
+    },
+  }}
+/>
+<Box sx={{ display: 'flex', justifyContent: 'space-between', fontSize: 12 }}>
+            <Typography>{ratingRange[0]}</Typography>
+            <Typography>{ratingRange[1]}</Typography>
           </Box>
-        </Grid>
+
+            </Grid>
 
         {/* Sort By */}
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={6} lg={4}>
           <FormControl fullWidth size="small">
             <InputLabel id="sort-select-label">Sort By</InputLabel>
             <Select
@@ -165,25 +211,37 @@ const FilterBar = ({ onFilterChange }) => {
               <MenuItem value="popularity.asc">Popularity (Low to High)</MenuItem>
               <MenuItem value="vote_average.desc">Rating (High to Low)</MenuItem>
               <MenuItem value="vote_average.asc">Rating (Low to High)</MenuItem>
-              <MenuItem value="release_date.desc">Release Date (Newest)</MenuItem>
-              <MenuItem value="release_date.asc">Release Date (Oldest)</MenuItem>
+              <MenuItem value="release_date.desc">Newest Releases</MenuItem>
+              <MenuItem value="release_date.asc">Oldest Releases</MenuItem>
             </Select>
           </FormControl>
         </Grid>
 
         {/* Action Buttons */}
-        <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2 }}>
-          <Button variant="outlined" onClick={handleResetFilters}>
-            Reset Filters
-          </Button>
-          <Button variant="contained" onClick={handleApplyFilters}>
-            Apply Filters
-          </Button>
-        </Grid>
+        <Grid item xs={12}>
+  <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2, mt: -2, pt: 2 }}>
+    <Button 
+      variant="outlined" 
+      color="secondary" 
+      onClick={handleResetFilters}
+      sx={{ textTransform: 'none', borderRadius: 2, minWidth: 140, height: 36 }}
+    >
+      Reset Filters
+    </Button>
+    <Button 
+      variant="contained" 
+      color="primary" 
+      onClick={handleApplyFilters}
+      sx={{ textTransform: 'none', borderRadius: 2, minWidth: 140, height: 36 }}
+    >
+      Apply Filters
+    </Button>
+  </Box>
+</Grid>
+
       </Grid>
     </Paper>
   );
 };
 
 export default FilterBar;
-

@@ -11,10 +11,11 @@ const MovieCard = ({ movie }) => {
   const { toggleFavorite, isFavorite } = useMovie();
   const [isHovered, setIsHovered] = useState(false);
   
+  // Retrieve movie related poster image
   const imageBaseUrl = 'https://image.tmdb.org/t/p/w500';
   const posterPath = movie.poster_path 
     ? `${imageBaseUrl}${movie.poster_path}`
-    : '/placeholder-movie.png'; // You'll need to add a placeholder image
+    : '/placeholder-movie.png'; 
 
   const releaseYear = movie.release_date 
     ? new Date(movie.release_date).getFullYear() 

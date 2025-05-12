@@ -28,6 +28,7 @@ const MovieDetail = () => {
       try {
         const data = await getMovieDetails(id);
         setMovie(data);
+      // eslint-disable-next-line no-unused-vars
       } catch (err) {
         setError('Failed to fetch movie details. Please try again later.');
       } finally {
@@ -87,7 +88,7 @@ const MovieDetail = () => {
       {backdropUrl && (
         <Box
           sx={{
-            height: { xs: '200px', sm: '300px', md: '400px' },
+      height: { xs: '300px', sm: '450px', md: '600px' }, // Increased heights
             width: '100%',
             position: 'relative',
             backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0.9)), url(${backdropUrl})`,

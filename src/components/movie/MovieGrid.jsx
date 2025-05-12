@@ -1,7 +1,10 @@
+// eslint-disable-next-line no-unused-vars
 import { useEffect, useRef, useCallback } from 'react';
 import { Grid, Box, Typography, Button, CircularProgress } from '@mui/material';
 import MovieCard from './MovieCard';
 import { useMovie } from '../../hooks/useMovie';
+import Masonry from '@mui/lab/Masonry';
+
 
 const MovieGrid = ({ movies, title, loadMore, hasMore }) => {
   const { loading, error } = useMovie();
@@ -35,27 +38,23 @@ const MovieGrid = ({ movies, title, loadMore, hasMore }) => {
           {title}
         </Typography>
       )}
-      
+
+       {/*To provide a justified layout for with similar size movie cards*/}      
       {movies.length === 0 && !loading ? (
         <Typography sx={{ textAlign: 'center', my: 4 }}>
           No movies found.
         </Typography>
       ) : (
-        <Grid container spacing={3}>
+        <Masonry columns={{ xs: 1, sm: 2, md: 3, lg: 4 }} spacing={2}>
           {movies.map((movie, index) => (
-            <Grid 
-              item 
-              xs={12} 
-              sm={6} 
-              md={4} 
-              lg={3} 
+            <Box
               key={`${movie.id}-${index}`}
               ref={index === movies.length - 1 ? lastMovieElementRef : null}
             >
               <MovieCard movie={movie} />
-            </Grid>
+            </Box>
           ))}
-        </Grid>
+        </Masonry>
       )}
       
       {loading && (
