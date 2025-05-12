@@ -19,7 +19,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = (username, password) => {
     // In a real app, you would validate against a backend
-    // For now, accept any non-empty username/password
+    // For now, the app accepts any non-empty username/password
     if (username && password) {
       setUser({ username });
       setIsAuthenticated(true);
