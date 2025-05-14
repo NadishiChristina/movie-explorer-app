@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { 
   AppBar, Toolbar, Typography, Box, IconButton, 
   InputBase, Button, Avatar, Menu, MenuItem,
@@ -59,11 +59,15 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 const Header = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { darkMode, toggleDarkMode } = useTheme();
   const { isAuthenticated, user, logout } = useAuth();
   const { handleSearch, searchQuery, clearSearch } = useMovie();
   const [searchInput, setSearchInput] = useState(searchQuery);
   const [anchorEl, setAnchorEl] = useState(null);
+  
+  // Check if we're on the login page
+  const isLoginPage = location.pathname === '/login';
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
@@ -97,52 +101,58 @@ const Header = () => {
     <AppBar position="sticky">
       <Toolbar>
         <Link 
-  to="/" 
-  style={{ 
-    display: 'flex', 
-    alignItems: 'center', 
-    textDecoration: 'none' 
-  }}
->
-  <img
-  src={darkMode ? logoDark : logoLight}
-  alt="Logo"
-  style={{ height: '80px', marginRight: '10px' }}
-/>
+          to="/" 
+          style={{ 
+            display: 'flex', 
+            alignItems: 'center', 
+            textDecoration: 'none' 
+          }}
+        >
+          <img
+            src={darkMode ? logoDark : logoLight}
+            alt="Logo"
+            style={{ height: '80px', marginRight: '10px' }}
+          />
+        </Link>
 
-</Link>
+        {/* Only show search bar if NOT on login page */}
+        {!isLoginPage && (
+          <Box component="form" onSubmit={handleSearchSubmit} sx={{ flexGrow: 1, ml: 2, display: 'flex', alignItems: 'center' }}>
+            <Search sx={{ flexGrow: 1 }}>
+              <SearchIconWrapper>
+                <SearchIcon />
+              </SearchIconWrapper>
+              <StyledInputBase
+                placeholder="Search movies..."
+                value={searchInput}
+                onChange={(e) => setSearchInput(e.target.value)}
+                inputProps={{ 'aria-label': 'search' }}
+              />
+            </Search>
+            {searchQuery && (
+              <Tooltip title="Clear search">
+                <IconButton 
+                  onClick={handleClearSearch} 
+                  color="inherit" 
+                  size="small" 
+                  sx={{ ml: 1 }}
+                >
+                  <ClearIcon />
+                </IconButton>
+              </Tooltip>
+            )}
+          </Box>
+        )}
 
-
-        <Box component="form" onSubmit={handleSearchSubmit} sx={{ flexGrow: 1, ml: 2, display: 'flex', alignItems: 'center' }}>
-          <Search sx={{ flexGrow: 1 }}>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search movies..."
-              value={searchInput}
-              onChange={(e) => setSearchInput(e.target.value)}
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </Search>
-          {searchQuery && (
-            <Tooltip title="Clear search">
-              <IconButton 
-                onClick={handleClearSearch} 
-                color="inherit" 
-                size="small" 
-                sx={{ ml: 1 }}
-              >
-                <ClearIcon />
-              </IconButton>
-            </Tooltip>
-          )}
-        </Box>
+        {/* Add a spacer div when on login page to maintain layout */}
+        {isLoginPage && <Box sx={{ flexGrow: 1 }} />}
 
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <Button color="inherit" component={Link} to="/favorites">
-            ❤ Favorites
-          </Button>
+          {!isLoginPage && (
+            <Button color="inherit" component={Link} to="/favorites">
+              ❤ Favorites
+            </Button>
+          )}
           
           <IconButton onClick={toggleDarkMode} color="inherit">
             {darkMode ? <LightMode /> : <DarkMode />}
