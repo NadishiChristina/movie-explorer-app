@@ -48,7 +48,7 @@ This web application allows users to search for movies, view detailed informatio
 - Deployment: Netlify
 
 ## 🌍 Live Demo
-👉 View Deployed App on Netlify
+👉 View Deployed App on Netlify : https://my-movies-explorer.netlify.app/
 
 ## 📌 Notes
 - The app uses local storage to remember your last searched movie and saved favorites.
