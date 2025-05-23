@@ -115,36 +115,36 @@ const FilterBar = ({ onFilterChange }) => {
             Release Year Range
           </Typography>
           <Slider
-  value={yearRange}
-  onChange={handleYearChange}
-  min={1900}
-  max={new Date().getFullYear()}
-  sx={{
-    color: '#3B82F6',
-    height: 8,
-    '& .MuiSlider-thumb': {
-      height: 24,
-      width: 24,
-      backgroundColor: '#fff',
-      border: '2px solid currentColor',
-      '&:hover, &.Mui-focusVisible, &.Mui-active': {
-        boxShadow: '0px 0px 0px 8px rgba(59,130,246,0.16)',
-      },
-    },
-    '& .MuiSlider-track': {
-      border: 'none',
-    },
-    '& .MuiSlider-rail': {
-      opacity: 0.3,
-      backgroundColor: '#bfbfbf',
-    },
-    '& .MuiSlider-valueLabel': {
-      backgroundColor: '#3B82F6',
-      color: '#fff',
-      borderRadius: '6px',
-    },
-  }}
-/>
+            value={yearRange}
+            onChange={handleYearChange}
+            min={1900}
+            max={new Date().getFullYear()}
+            sx={{
+              color: '#3B82F6',
+              height: 8,
+              '& .MuiSlider-thumb': {
+                height: 24,
+                width: 24,
+                backgroundColor: '#fff',
+                border: '2px solid currentColor',
+                '&:hover, &.Mui-focusVisible, &.Mui-active': {
+                  boxShadow: '0px 0px 0px 8px rgba(59,130,246,0.16)',
+                },
+              },
+              '& .MuiSlider-track': {
+                border: 'none',
+              },
+              '& .MuiSlider-rail': {
+                opacity: 0.3,
+                backgroundColor: '#bfbfbf',
+              },
+              '& .MuiSlider-valueLabel': {
+                backgroundColor: '#3B82F6',
+                color: '#fff',
+                borderRadius: '6px',
+              },
+            }}
+          />
 
           <Box sx={{ display: 'flex', justifyContent: 'space-between', fontSize: 12 }}>
             <Typography>{yearRange[0]}</Typography>
@@ -153,48 +153,47 @@ const FilterBar = ({ onFilterChange }) => {
         </Grid>
 
         {/* Rating Range */}
-            <Grid item xs={12} md={6} lg={4} mt={-2}>
-              <Typography variant="subtitle1" gutterBottom fontWeight={500}>
+        <Grid item xs={12} md={6} lg={4} mt={-2}>
+          <Typography variant="subtitle1" gutterBottom fontWeight={500}>
             Rating Range
           </Typography>
-              <Slider
-  value={ratingRange}
-  onChange={handleRatingChange}
-  min={0}
-                max={5}
-                step={0.5}
-  sx={{
-    color: '#93f226',
-    height: 8,
-    '& .MuiSlider-thumb': {
-      height: 24,
-      width: 24,
-      backgroundColor: '#fff',
-      border: '2px solid currentColor',
-      '&:hover, &.Mui-focusVisible, &.Mui-active': {
-        boxShadow: '0px 0px 0px 8px rgba(59,130,246,0.16)',
-      },
-    },
-    '& .MuiSlider-track': {
-      border: 'none',
-    },
-    '& .MuiSlider-rail': {
-      opacity: 0.3,
-      backgroundColor: '#bfbfbf',
-    },
-    '& .MuiSlider-valueLabel': {
-      backgroundColor: '#3B82F6',
-      color: '#fff',
-      borderRadius: '6px',
-    },
-  }}
-/>
-<Box sx={{ display: 'flex', justifyContent: 'space-between', fontSize: 12 }}>
+          <Slider
+            value={ratingRange}
+            onChange={handleRatingChange}
+            min={0}
+            max={5}
+            step={0.5}
+            sx={{
+              color: '#93f226',
+              height: 8,
+              '& .MuiSlider-thumb': {
+                height: 24,
+                width: 24,
+                backgroundColor: '#fff',
+                border: '2px solid currentColor',
+                '&:hover, &.Mui-focusVisible, &.Mui-active': {
+                  boxShadow: '0px 0px 0px 8px rgba(59,130,246,0.16)',
+                },
+              },
+              '& .MuiSlider-track': {
+                border: 'none',
+              },
+              '& .MuiSlider-rail': {
+                opacity: 0.3,
+                backgroundColor: '#bfbfbf',
+              },
+              '& .MuiSlider-valueLabel': {
+                backgroundColor: '#3B82F6',
+                color: '#fff',
+                borderRadius: '6px',
+              },
+            }}
+          />
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', fontSize: 12 }}>
             <Typography>{ratingRange[0]}</Typography>
             <Typography>{ratingRange[1]}</Typography>
           </Box>
-
-            </Grid>
+        </Grid>
 
         {/* Sort By */}
         <Grid item xs={12} md={6} lg={4}>
@@ -219,25 +218,25 @@ const FilterBar = ({ onFilterChange }) => {
 
         {/* Action Buttons */}
         <Grid item xs={12}>
-  <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2, mt: -2, pt: 2 }}>
-    <Button 
-      variant="outlined" 
-      color="secondary" 
-      onClick={handleResetFilters}
-      sx={{ textTransform: 'none', borderRadius: 2, minWidth: 140, height: 36 }}
-    >
-      Reset Filters
-    </Button>
-    <Button 
-      variant="contained" 
-      color="primary" 
-      onClick={handleApplyFilters}
-      sx={{ textTransform: 'none', borderRadius: 2, minWidth: 140, height: 36 }}
-    >
-      Apply Filters
-    </Button>
-  </Box>
-</Grid>
+          <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2, mt: -2, pt: 2 }}>
+            <Button 
+              variant="outlined" 
+              color="secondary" 
+              onClick={handleResetFilters}
+              sx={{ textTransform: 'none', borderRadius: 2, minWidth: 140, height: 36 }}
+            >
+              Reset Filters
+            </Button>
+            <Button 
+              variant="contained" 
+              color="primary" 
+              onClick={handleApplyFilters}
+              sx={{ textTransform: 'none', borderRadius: 2, minWidth: 140, height: 36 }}
+            >
+              Apply Filters
+            </Button>
+          </Box>
+        </Grid>
 
       </Grid>
     </Paper>
