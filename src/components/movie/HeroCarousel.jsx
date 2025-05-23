@@ -21,16 +21,17 @@ const slides = [
 ];
 
 const HeroCarousel = () => {
+  // eslint-disable-next-line no-unused-vars
   const theme = useTheme();
 
   const settings = {
     dots: true,
     infinite: true,
-    speed: 800,
+    speed: 800,          // Faster slide transition
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 4000,
+    autoplaySpeed: 3000, // Slides change every 3 seconds
     arrows: false,
   };
 
